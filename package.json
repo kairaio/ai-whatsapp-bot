@@ -1,0 +1,27 @@
+{
+  "name": "ai-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "🤖 An advanced multi-device WhatsApp Bot integrated with AI (LLM), built using Node.js, Baileys, and secure environment configurations. Ideal for automated customer support and sales agents.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kairaio/ai-whatsapp-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kairaio/ai-whatsapp-bot/issues"
+  },
+  "homepage": "https://github.com/kairaio/ai-whatsapp-bot#readme",
+  "dependencies": {
+    "@google/genai": "^2.10.0",
+    "@whiskeysockets/baileys": "^7.0.0-rc13",
+    "dotenv": "^17.4.2",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
