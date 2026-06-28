@@ -1,44 +1,29 @@
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const apiKey = process.env.OPENAI_API_KEY;
+const genAI = new GoogleGenerativeAI(process.env.API_KEY_AI || "");
 
-const client = apiKey
-  ? new OpenAI({ apiKey })
-  : null;
-
-/**
- * Menghasilkan respons AI menggunakan OpenAI GPT-5
- * @param {Array} history
- */
 export async function generateAIResponse(history) {
-  if (!client || !apiKey) {
+  if (!process.env.API_KEY_AI) {
     const lastMessage = history[history.length - 1]?.content || "";
-
-    return `[Demo Mode] Bot menerima pesan: "${lastMessage}". (Konfigurasi OPENAI_API_KEY diperlukan.)`;
+    return `[Demo Mode] Bot menerima pesan: "${lastMessage}". (Konfigurasi API_KEY_AI diperlukan.)`;
   }
 
   try {
-    const messages = [
-      {
-        role: "system",
-        content:
-          "Anda adalah asisten virtual WhatsApp yang ramah, profesional, membantu, dan menjawab dalam bahasa yang digunakan pengguna."
-      },
-      ...history
-    ];
-
-    const response = await client.responses.create({
-      model: "gpt-5",
-      input: messages
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const chat = model.startChat({
+      history: history.map(msg => ({
+        role: msg.role === "assistant" ? "model" : "user",
+        parts: [{ text: msg.content }],
+      })),
     });
 
-    return response.output_text || "Maaf, saya tidak dapat menjawab saat ini.";
-
+    const result = await chat.sendMessage(history[history.length - 1].content);
+    return result.response.text();
   } catch (error) {
-    console.error("[OpenAI Error]", error);
+    console.error("[Gemini Error]", error);
     return "Maaf, sistem AI sedang mengalami gangguan.";
   }
 }
