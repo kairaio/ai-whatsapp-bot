@@ -19,9 +19,9 @@
   },
   "homepage": "https://github.com/kairaio/ai-whatsapp-bot#readme",
   "dependencies": {
-    "@google/genai": "^2.10.0",
     "@whiskeysockets/baileys": "^7.0.0-rc13",
     "dotenv": "^17.4.2",
+    "openai": "^6.45.0",
     "qrcode-terminal": "^0.12.0"
   }
 }
